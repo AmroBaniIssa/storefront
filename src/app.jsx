@@ -57,14 +57,14 @@
 
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-// import Categories from './components/Categories/Categories';
+import Categories from './components/Categories/Categories';
 import Products from './components/Products/Products';
 
 export default (props) => {
     return (
         <>
             <Header />
-            {/* <Categories/> */}
+            <Categories/>
             <Products/>
             <Footer />
         </>
