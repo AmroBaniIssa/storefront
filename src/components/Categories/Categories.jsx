@@ -1,65 +1,48 @@
-// import React from "react";
-// import { connect } from "react-redux";
-// import { selectCategory } from "../../store/CategoriesReducer";
-// import Box from "@mui/material/Box";
-// import InputLabel from "@mui/material/InputLabel";
-// import FormControl from "@mui/material/FormControl";
-// import NativeSelect from "@mui/material/NativeSelect";
+import React from "react";
+import { connect } from "react-redux";
+import { selectCategory } from "../../store/CategoriesReducer";
+import Box from "@mui/material/Box";
+import InputLabel from "@mui/material/InputLabel";
+import FormControl from "@mui/material/FormControl";
+import NativeSelect from "@mui/material/NativeSelect";
 
-// function CategoriesList(props) {
-//   return (
-//     <div>
-//       <h1>Product List</h1>
-//       <ul>
-//         {/* <List
-//           sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-//         >
-//           {props.categories.categories.map((category) => (
-//             <ListItem
-//               key={category}
-//               disableGutters
-//               secondaryAction={
-//                 <IconButton aria-label="comment">
-//                   <CommentIcon />
-//                 </IconButton>
-//               }
-//             >
-//               <ListItemText primary={` ${category.dispalyName}`} />
-//             </ListItem>
-//           ))}
-//         </List> */}
-//         <Box sx={{ minWidth: 120 }}>
-//           <FormControl fullWidth>
-//             <InputLabel variant="standard" htmlFor="uncontrolled-native">
-//               Age
-//             </InputLabel>
-//             <NativeSelect
-//               defaultValue={30}
-//               inputProps={{
-//                   name: "age",
-//                   id: "uncontrolled-native",
-//                 }}
-//                 >
-//                     props.categories.categories.map((category) => (
+function CategoriesList(props) {
+  return (
+    <div>
+      <h1>  Category </h1>
+        <Box sx={{ minWidth: 120 }}
+         key={1}>
+          <FormControl fullWidth>
+            {/* <InputLabel variant="standard" htmlFor={`category-select-${1}`}>
+            
+            </InputLabel> */}
+            <NativeSelect
+              inputProps={{
+                  name: `category-${1}`,
+                  id: `category-select-${1}`,
+                }}
+                // value={category.selectedCategory} // Set the value based on the category
+                onChange={(event) => props.selectCategory(event.target.value, 1)}
+                
+                >
+                {props.categories.categories.map((category) => (
+              <option value={10}>{category.dispalyName}</option>
+            //   <option value={20}>Twenty</option>
+            //   <option value={30}>Thirty</option>
+              ))}
+            </NativeSelect>
+          </FormControl>
+        </Box>
+    </div>
+  );
+}
 
-//               <option value={10} props.categories.categories.map((category) => ()>Ten</option>
-//               <option value={20}>Twenty</option>
-//               <option value={30}>Thirty</option>
-//                     )
-//             </NativeSelect>
-//           </FormControl>
-//         </Box>
-//       </ul>
-//     </div>
-//   );
-// }
+const mapStateToProps = (state) => ({
+  categories: state.categoriesReducer,
+});
 
-// const mapStateToProps = (state) => ({
-//   categories: state.categoriesReducer,
-// });
+const mapDispatchToProps = {
+  selectCategory,
+};
 
-// const mapDispatchToProps = {
-//   selectCategory,
-// };
-
-// export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);
+export default connect(mapStateToProps, mapDispatchToProps)(CategoriesList);
