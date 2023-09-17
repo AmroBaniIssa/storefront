@@ -1,4 +1,5 @@
-import axios from "axios";
+// import superagent from "superagent";
+// const api = "https://fakestoreapi.com/products";
 
 let initialState = {
   products: [
@@ -50,44 +51,49 @@ let initialState = {
 function productsReducer(state = initialState, action) {
   switch (action.type) {
     case "GET_PRODUCTS":
-      console.log(payload);
+      console.log(action.payload);
       return {
         ...state,
         products: action.payload,
         filteredProducts: action.payload,
       };
     case "SELECTED_CATEGORY":
-      if (action.payload.id) {
-        let filteredProducts = state.products.filter(
-          (product) => product.categoryId === action.payload.id.toString()
+      if (action.payload === 3) {
+        const filteredProducts = state.products.filter(
+          (product) => product.category === "jewelery"
         );
-        return { ...state, filteredProducts };
-      }
-      return { ...state, filteredProducts: state.products };
+        // console.log("filterd jewelry", filteredProducts);
 
+        return { ...state, filteredProducts: filteredProducts };
+      } else if (action.payload === 2) {
+        const filteredProducts = state.products.filter(
+          (product) => product.category === "electronics"
+        );
+        // console.log("filterd electronics", state.filteredProducts);
+
+        return { ...state, filteredProducts: filteredProducts };
+      } else if (action.payload === 4) {
+        const filteredProducts = state.products.filter(
+          (product) => product.category === "men's clothing"
+        );
+        // console.log("filterd men's clothing", state.filteredProducts);
+
+        return { ...state, filteredProducts: filteredProducts };
+      } else if (action.payload === 5) {
+        const filteredProducts = state.products.filter(
+          (product) => product.category === "women's clothing"
+        );
+        // console.log("filterd women's clothing", state.filteredProducts);
+
+        return { ...state, filteredProducts: filteredProducts };
+      } else if (action.payload === 1) {
+        // Reset to include all products when payload is not 2
+        return { ...state, filteredProducts: state.products };
+      }
     default:
-      console.log(state.products);
+      // console.log("filteredProducts", state.filteredProducts);
       return state;
   }
 }
-
-export const getProducts = () => async (dispatch) => {
-  let respons = null;
-  try {
-    response = await axios.get("https://fakestoreapi.com/products");
-    console.log("///////", response);
-    // dispatch({
-    //   type: "GET_PRODUCTS",
-    //   payload: response.data,
-    // });
-  } catch (err) {
-    console.error(err);
-  }
-
-  dispatch({
-    type: "GET_PRODUCTS",
-    payload: respons?.data?.results,
-  });
-};
 
 export default productsReducer;
