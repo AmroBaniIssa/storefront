@@ -2,35 +2,49 @@ const initialState = {
   categories: [
     {
       id: 1,
-      dispalyName: "electronics",
-      normalizedName: "",
-      description: "This category contains the electronics",
+      displayName: "all",
+      normalizedName: "all",
+      description: "all categories",
     },
     {
       id: 2,
-      dispalyName: "jewelery",
-      normalizedName: "",
-      description: "This category contains the jewelery",
+      displayName: "electronics",
+      normalizedName: "electronics",
+      description: "This category contains electronics",
     },
     {
       id: 3,
-      dispalyName: "men's clothing",
-      normalizedName: "",
-      description: "This category contains men clothing",
+      displayName: "jewelry",
+      normalizedName: "jewelry",
+      description: "This category contains jewelry",
     },
     {
-      id: 3,
-      dispalyName: "women's clothing",
-      normalizedName: "",
-      description: "This category contains women clothing",
+      id: 4,
+      displayName: "men's clothing",
+      normalizedName: "mens-clothing",
+      description: "This category contains men's clothing",
+    },
+    {
+      id: 5,
+      displayName: "women's clothing",
+      normalizedName: "womens-clothing",
+      description: "This category contains women's clothing",
     },
   ],
-  selectedCategory: "",
+  selectedCategory: "", 
 };
 function categoriesReducer(state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case "SELECTED_CATEGORY":
+      const selectedCategory = state.categories.find(
+        (category) => category.id === payload
+      );
+      console.log("selected category",selectedCategory)
+      return {
+        ...state,
+        selectedCategory:selectedCategory
+      };
       // let selectedCategory = state.categories + 1;
       // let selectedCategory = state.categories.map((category) => {
       //     if (category.id === payload) {
@@ -43,17 +57,17 @@ function categoriesReducer(state = initialState, action) {
       //         return candidate;
       //     }
       // });
-      let selectedCategory = null;
-      for (const category of state.categories) {
-        if (category.id === payload) {
-          selectedCategory = { ...category };
-          break; // Exit the loop once a match is found
-        }
-      }
-      return {
-        ...state,
-        selectedCategory: selectedCategory,
-      };
+      // let selectedCategory = null;
+      // for (const category of state.categories) {
+      //   if (category.id === payload) {
+      //     selectedCategory = { ...category };
+      //     break; // Exit the loop once a match is found
+      //   }
+      // }
+      // return {
+      //   ...state,
+      //   selectedCategory: selectedCategory,
+      // };
 
     case "RESET":
       return initialState;
@@ -62,10 +76,10 @@ function categoriesReducer(state = initialState, action) {
   }
 }
 
-export function selectCategory(name) {
+export function selectCategory(id) {
   return {
     type: "SELECTED_CATEGORY",
-    payload: name,
+    payload: id,
   };
 }
 export const reset = () => {

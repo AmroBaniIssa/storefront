@@ -5,18 +5,20 @@ const initialState = {
 };
 export default function cartReducer(state = initialState, action) {
   const { type, payload } = action;
+  
   switch (type) {
-    case "ADD-TO-CART":
-      state.cartItems.push({ ...payload, quantity: 1 });
-      payload.inventory -=1;
+    case "ADDD-TO-CART":
+      // console.log("action", payload);
+      state.cartItems.push(payload);
+      
+      // payload.inventory -=1;
+      // console.log("cart items", state.cartItems);
       return {
         ...state,
         cartItemsCount: state.cartItemsCount + 1,
         totalPrice: (state.totalPrice += payload.price),
       };
-
     case "REMOVE-FROM-CART":
-   
       let deletedItem = state.cartItems.filter(
         (item, indx) => item.id !== payload.id
       );
@@ -27,8 +29,7 @@ export default function cartReducer(state = initialState, action) {
         cartItemsCount: total,
         totalPrice: (state.totalPrice -= payload.price),
       };
-    
-    
+
     case "CLEAR_CART":
       return {
         ...state,
@@ -37,12 +38,17 @@ export default function cartReducer(state = initialState, action) {
         totalPrice: 0,
       };
     default:
+      // console.log("cart items", state.cartItems);
+
       return state;
   }
 }
+
 export const addToCart = (item) => {
+  // console.log("add to card", item);
+
   return {
-    type: "ADD-TO-CART",
+    type: "ADDD-TO-CART",
     payload: item,
   };
 };
@@ -52,7 +58,6 @@ export const removeFromCart = (item) => {
     payload: item,
   };
 };
-
 
 export const clearCart = () => {
   return {
