@@ -8,33 +8,35 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { selectCategory } from "../../store/CategoriesReducer";
-import { addToCart } from "../../store/CartReducer";
+import { removeFromCart } from "../../store/CartReducer";
 import { useDispatch } from "react-redux";
 import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import Categories from "../Categories/Categories";
-function ProductList(props) {
+
+function Cart(props) {
   const dispatch = useDispatch();
 
-  const handleAddToCart = (item) => {
+  const handleRemoveFromCart = (item) => {
     // Dispatch the `addToCart` action creator
-    dispatch(addToCart(item));
+    dispatch(removeFromCart(item));
   };
   // const handleAddToCart = (item) => {
   //   addToCart(item);
   // };
-console.log("cart state",props.cartReducer)  
-  useEffect(() => {
-    props.getProducts();
-  }, []);
+// console.log("cart state",props.cartReducer)  
+//   useEffect(() => {
+//     props.getProducts();
+//   }, []);
 
   return (
     <div>
       <Header />
-      <Categories />
-      <h1>Product List</h1>
+
+      <h1>your cart List</h1>
+      <h1> number of items {props.cartReducer.cartItemsCount}</h1>
+      <h1> Total Price {Math.floor(props.cartReducer.totalPrice)}</h1>
+
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {props.products.filteredProducts.map((product, idx) => (
+        {props.cartReducer.cartItems.map((product, idx) => (
           <div key={idx} style={{ margin: "100px" }}>
             <Card sx={{ maxWidth: 500 }}>
               <CardMedia
@@ -42,7 +44,6 @@ console.log("cart state",props.cartReducer)
                 image={product.image}
                 title="green iguana"
               />
-             
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.title}
@@ -53,14 +54,10 @@ console.log("cart state",props.cartReducer)
                 <Typography variant="body2" color="text.secondary">
                   <h4>price:{product.price} </h4>
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <h4>inventory:{product.inventory} items available</h4>
-                </Typography>
               </CardContent>
-           
               <CardActions>
-                <Button onClick={() => handleAddToCart(product)}>
-                  Add to Cart
+                <Button onClick={() => handleRemoveFromCart(product)}>
+                Remove From Cart
                 </Button>
                 {/* <Button size="small">Learn More</Button> */}
               </CardActions>
@@ -76,10 +73,8 @@ console.log("cart state",props.cartReducer)
           </div>
         ))}
       </div>
-      {/* <button onClick={props.reset}>Reset Products</button> */}
-      <Footer />
+      <button onClick={props.reset}>Reset Products</button>
     </div>
-
   );
 }
 
@@ -93,7 +88,7 @@ const mapDispatchToProps = (dispatch) => ({
   getProducts: () => dispatch(getProducts()),
   reset: () => dispatch({ type: "RESET" }),
   selectCategory: selectCategory,
-  addToCart: () => dispatch(addToCart()),
+  removeFromCart: () => dispatch(removeFromCart()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default connect(mapStateToProps, mapDispatchToProps)(Cart);
