@@ -55,18 +55,25 @@
 
 // export default App;
 
-import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-import Categories from './components/Categories/Categories';
-import Products from './components/Products/Products';
+import React, { Component } from "react";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Products from "./components/Products/Products";
+import Cart from "./components/Cart/Cart";
 
 export default (props) => {
-    return (
-        <>
-            <Header />
-            <Categories/>
-            <Products/>
-            <Footer />
-        </>
-    )
-}
+  return (
+    <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Products />} />
+        </Routes>
+        <Routes>
+          <Route path="/cart" element={<Cart />} />
+        </Routes>
+      </BrowserRouter>
+
+      {/* <Products /> */}
+    </>
+  );
+};

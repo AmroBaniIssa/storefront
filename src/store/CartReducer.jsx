@@ -5,24 +5,25 @@ const initialState = {
 };
 export default function cartReducer(state = initialState, action) {
   const { type, payload } = action;
-  
+
   switch (type) {
     case "ADDD-TO-CART":
       // console.log("action", payload);
-      state.cartItems.push(payload);
-      
-      // payload.inventory -=1;
-      // console.log("cart items", state.cartItems);
+      if (payload.inventory>=1) {
+        state.cartItems.push(payload);
+        payload.inventory -= 1;
+        state.cartItemsCount += 1
+      }
       return {
         ...state,
-        cartItemsCount: state.cartItemsCount + 1,
         totalPrice: (state.totalPrice += payload.price),
       };
     case "REMOVE-FROM-CART":
       let deletedItem = state.cartItems.filter(
         (item, indx) => item.id !== payload.id
       );
-      let total = state.cartItemsCount - payload.quantity;
+      let total = state.cartItemsCount - 1;
+      payload.inventory += 1;
 
       return {
         cartItems: deletedItem,
