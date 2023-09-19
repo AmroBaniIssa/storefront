@@ -4,11 +4,9 @@ import productsReducer from "./ProductsReducer";
 import categoriesReducer from "./CategoriesReducer";
 import cartReducer from "./CartReducer"
 import thunk from "redux-thunk";
-// import myCounterReducer from "./Votes";
 
 
 let reducers = combineReducers({
-//   myCounterReducer: myCounterReducer,
 
 productsReducer: productsReducer,
 categoriesReducer:categoriesReducer,
