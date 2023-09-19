@@ -45,30 +45,7 @@ function categoriesReducer(state = initialState, action) {
         ...state,
         selectedCategory:selectedCategory
       };
-      // let selectedCategory = state.categories + 1;
-      // let selectedCategory = state.categories.map((category) => {
-      //     if (category.id === payload) {
-      //         return {
-      //             ...state,
-      //     selectedCategory :selectedCategory
-      //         }
-      //     }
-      //     else {
-      //         return candidate;
-      //     }
-      // });
-      // let selectedCategory = null;
-      // for (const category of state.categories) {
-      //   if (category.id === payload) {
-      //     selectedCategory = { ...category };
-      //     break; // Exit the loop once a match is found
-      //   }
-      // }
-      // return {
-      //   ...state,
-      //   selectedCategory: selectedCategory,
-      // };
-
+     
     case "RESET":
       return initialState;
     default:

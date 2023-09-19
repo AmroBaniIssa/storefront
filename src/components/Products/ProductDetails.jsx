@@ -1,79 +1,89 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getProducts } from "../../store/ProductsAction";
+import { useParams } from "react-router-dom";
 import Card from "@mui/material/Card";
+import { useDispatch } from "react-redux";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import { selectCategory } from "../../store/CategoriesReducer";
-import { removeFromCart } from "../../store/CartReducer";
-import { useDispatch } from "react-redux";
 import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import { addToCart } from "../../store/CartReducer";
 
-function Cart(props) {
+function ProductDetails(props) {
   const dispatch = useDispatch();
 
-  const handleRemoveFromCart = (item) => {
-    dispatch(removeFromCart(item));
+  const handleAddToCart = (item) => {
+    dispatch(addToCart(item));
   };
+  const { ID } = useParams();
+  console.log(props);
+  console.log(ID);
+  const productId = parseInt(ID);
+  const product = props.products.filteredProducts.find(
+    (p) => p.id === productId
+  );
+ 
+  console.log(product);
 
+
+  useEffect(() => {
+  
+  }, [ID]);
 
   return (
     <div>
       <Header />
-
-      <h1>your cart List</h1>
-      <h1> number of items {props.cartReducer.cartItemsCount}</h1>
-      <h1> Total Price {Math.floor(props.cartReducer.totalPrice)}</h1>
-
+      <h1>Product Details</h1>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
-        {props.cartReducer.cartItems.map((product, idx) => (
-          <div key={idx} style={{ margin: "100px" }}>
+        {product ? (
+          <div key={product.id} style={{ margin: "100px" }}>
             <Card sx={{ maxWidth: 500 }}>
               <CardMedia
                 sx={{ height: 500, width: 500 }}
                 image={product.image}
-                title="green iguana"
+                title="Product Image"
               />
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.title}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  <h4>description:</h4> {product.description}
+                  <h4>Description:</h4> {product.description}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  <h4>price:{product.price} </h4>
+                  <h4>Price: {product.price}</h4>
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                  <h4>Inventory: {product.inventory} items available</h4>
                 </Typography>
               </CardContent>
+
               <CardActions>
-                <Button onClick={() => handleRemoveFromCart(product)}>
-                Remove From Cart
+              <Button onClick={() => handleAddToCart(product)}>
+                  Add to Cart
                 </Button>
               </CardActions>
-             
             </Card>
           </div>
-        ))}
+        ) : (
+          <p>Product not found</p>
+        )}
       </div>
-      <button onClick={props.reset}>Reset Products</button>
+      <Footer />
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
   products: state.productsReducer,
-  categories: state.categoriesReducer,
   cartReducer: state.cartReducer,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  getProducts: () => dispatch(getProducts()),
-  reset: () => dispatch({ type: "RESET" }),
-  selectCategory: selectCategory,
-  removeFromCart: () => dispatch(removeFromCart()),
+    addToCart: () => dispatch(addToCart()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cart);
+export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);

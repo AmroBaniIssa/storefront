@@ -1,18 +1,6 @@
-// import React, { useContext } from "react";
-// import { Navbar, Alignment, Button } from "@blueprintjs/core";
-import { Link } from "react-router-dom";
-// export default function Header(props) {
-//   return (
-//     <Navbar>
-//       <Navbar.Group align={Alignment.LEFT}>
-//         <Link to="/">Jordanian Amazon</Link>
-//         <Link to="/cart">cart</Link>
-//         <Navbar.Divider />
-//       </Navbar.Group>
-//     </Navbar>
 
-//   );
-// }
+import { Link } from "react-router-dom";
+
 import { connect } from "react-redux";
 
 import * as React from "react";
@@ -93,27 +81,12 @@ function Header(props) {
           <Link
             variant="h6"
             component="div"
-            style={linkStyle} // sx={{ flexGrow: 1, display: { xs: "none", sm: "block" ,color:"red"} }}
+            style={linkStyle} 
             to="/cart"
           >
             cart({props.cartReducer.cartItemsCount})
           </Link>
-          {/* <Link
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-            to="/cart"
-          >
-            Home
-          </Link> */}
-          {/* 
-          <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {navItems.map((item) => (
-              <Button key={item} sx={{ color: "#fff" }}>
-                                {item}
-              </Button>
-            ))}
-          </Box> */}
+          
         </Toolbar>
       </AppBar>
       <nav>
@@ -123,7 +96,7 @@ function Header(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true, 
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -146,11 +119,6 @@ const mapStateToProps = (state) => ({
   cartReducer: state.cartReducer,
 });
 
-// const mapDispatchToProps = (dispatch) => ({
-//   getProducts: () => dispatch(getProducts()),
-//   reset: () => dispatch({ type: "RESET" }),
-//   selectCategory: selectCategory,
-//   addToCart: () => dispatch(addToCart()),
-// });
+
 
 export default connect(mapStateToProps)(Header);

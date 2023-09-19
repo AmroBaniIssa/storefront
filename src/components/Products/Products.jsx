@@ -11,19 +11,20 @@ import { selectCategory } from "../../store/CategoriesReducer";
 import { addToCart } from "../../store/CartReducer";
 import { useDispatch } from "react-redux";
 import Header from "../Header/Header";
+import Simplecart from "../Cart/SimpleCart"
 import Footer from "../Footer/Footer";
 import Categories from "../Categories/Categories";
+import { Link } from "react-router-dom";
+
 function ProductList(props) {
   const dispatch = useDispatch();
 
   const handleAddToCart = (item) => {
-    // Dispatch the `addToCart` action creator
     dispatch(addToCart(item));
   };
-  // const handleAddToCart = (item) => {
-  //   addToCart(item);
-  // };
-console.log("cart state",props.cartReducer)  
+
+  
+  console.log("cart state", props.cartReducer);
   useEffect(() => {
     props.getProducts();
   }, []);
@@ -32,8 +33,12 @@ console.log("cart state",props.cartReducer)
     <div>
       <Header />
       <Categories />
+      <Simplecart/>
+    
+<div style={{ display: "flex", flexWrap: "wrap", marginTop:'20PX' }}>
       <h1>Product List</h1>
-      <div style={{ display: "flex", flexWrap: "wrap" }}>
+</div>
+      <div style={{ display: "flex", flexWrap: "wrap", marginTop:'20PX' }}>
         {props.products.filteredProducts.map((product, idx) => (
           <div key={idx} style={{ margin: "100px" }}>
             <Card sx={{ maxWidth: 500 }}>
@@ -42,44 +47,35 @@ console.log("cart state",props.cartReducer)
                 image={product.image}
                 title="green iguana"
               />
-             
               <CardContent>
                 <Typography gutterBottom variant="h5" component="div">
                   {product.title}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  <h4>description:</h4> {product.description}
-                </Typography>
+             
                 <Typography variant="body2" color="text.secondary">
                   <h4>price:{product.price} </h4>
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                  <h4>inventory:{product.inventory} items available</h4>
+                  <h4>in stock :{product.inventory} items available</h4>
                 </Typography>
               </CardContent>
-           
+
               <CardActions>
                 <Button onClick={() => handleAddToCart(product)}>
                   Add to Cart
                 </Button>
-                {/* <Button size="small">Learn More</Button> */}
+
+                <Button >
+                  <Link to={`/ProductDetails/${product.id}`}>MORE DETAILS</Link>
+                </Button>
               </CardActions>
-              {/* <li>{product.title}</li>
-            <img
-              src={product.image}
-              alt="Description of the image"
-              height={200}
-              ></img>
-              <button>add to cart</button>
-            </div> */}
+         
             </Card>
           </div>
         ))}
       </div>
-      {/* <button onClick={props.reset}>Reset Products</button> */}
       <Footer />
     </div>
-
   );
 }
 

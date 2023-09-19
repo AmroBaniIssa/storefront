@@ -87,11 +87,9 @@ function productsReducer(state = initialState, action) {
 
         return { ...state, filteredProducts: filteredProducts };
       } else if (action.payload === 1) {
-        // Reset to include all products when payload is not 2
         return { ...state, filteredProducts: state.products };
       }
     default:
-      // console.log("filteredProducts", state.filteredProducts);
       return state;
   }
 }
