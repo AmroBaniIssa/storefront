@@ -19,16 +19,34 @@ export default function cartReducer(state = initialState, action) {
         totalPrice: (state.totalPrice += payload.price),
       };
     case "REMOVE-FROM-CART":
-      let deletedItem = state.cartItems.filter(
-        (item, indx) => item.id !== payload.id
-      );
-      let total = state.cartItemsCount - 1;
-      payload.inventory += 1;
+      // let deletedItem = state.cartItems.filter(
+      //   (item, indx) => item.id !== payload.id
+      // );
+      // let total = state.cartItemsCount - 1;
+      // payload.inventory += 1;
 
+      // return {
+      //   cartItems: deletedItem,
+      //   cartItemsCount: total,
+      //   totalPrice: (state.totalPrice -= payload.price),
+      // };
+      if (payload.inventory >= 1) {
+        const itemIndex = state.cartItems.findIndex((item) => item.id === payload.id);
+        if (itemIndex !== -1) {
+          const updatedCartItems = [...state.cartItems];
+          updatedCartItems.splice(itemIndex, 1);
+          payload.inventory += 1;
+          console.log(state.cartItems);
+          return {
+            ...state,
+            cartItems: updatedCartItems,
+            cartItemsCount: state.cartItemsCount - 1,
+            totalPrice: state.totalPrice - payload.price,
+          };
+        }
+      }
       return {
-        cartItems: deletedItem,
-        cartItemsCount: total,
-        totalPrice: (state.totalPrice -= payload.price),
+        ...state,
       };
 
     case "CLEAR_CART":

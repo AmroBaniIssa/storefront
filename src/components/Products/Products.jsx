@@ -41,7 +41,14 @@ function ProductList(props) {
       <div style={{ display: "flex", flexWrap: "wrap", marginTop:'20PX' }}>
         {props.products.filteredProducts.map((product, idx) => (
           <div key={idx} style={{ margin: "100px" }}>
-            <Card sx={{ maxWidth: 500 }}>
+            <Card sx={{
+                maxWidth: 500,
+                height:800,
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 1)", 
+                border:"solid 5px #FF3C5A",
+                borderRadius: "8px",
+                backgroundColor:"#0C7592"
+              }}>
               <CardMedia
                 sx={{ height: 500, width: 500 }}
                 image={product.image}
@@ -61,11 +68,21 @@ function ProductList(props) {
               </CardContent>
 
               <CardActions>
-                <Button onClick={() => handleAddToCart(product)}>
+                <Button onClick={() => handleAddToCart(product)} sx={{
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 1)", 
+                border:"solid 1px #FF3C5A",
+                borderRadius: "8px",
+                backgroundColor:"white"
+              }}>
                   Add to Cart
                 </Button>
 
-                <Button >
+                <Button  sx={{
+                boxShadow: "0px 4px 6px rgba(0, 0, 0, 1)", 
+                border:"solid 1px #FF3C5A",
+                borderRadius: "8px",
+                backgroundColor:"white"
+              }}>
                   <Link to={`/ProductDetails/${product.id}`}>MORE DETAILS</Link>
                 </Button>
               </CardActions>
